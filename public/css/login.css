@@ -1,0 +1,266 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.5s, color 0.5s;
+}
+
+body {
+
+    background: linear-gradient(120deg, #ffffff, #f0f0f0);
+    color: #4b1e08;
+
+}
+
+.dark-mode {
+
+    background: linear-gradient(120deg, #070129, #0e0427);
+    color: #ffffff;
+
+}
+
+.login {
+    border-radius: 10px;
+    border: 1px solid white;
+    background-color: transparent;
+    backdrop-filter: blur(12px);
+    width: 40%;
+    margin: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+    margin-top: 10%;
+}
+
+.login form {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: auto;
+    padding: 5%;
+    font-size: 14px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    color: #ca671b;
+    align-items: center;
+}
+
+.login form h2 {
+    text-align: center;
+    margin: 10px;
+    color: #693f69;
+}
+
+.login h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 38px;
+}
+
+.login input[type="name"],
+.login input[type="email"],
+.login input[type="password"] {
+    width: 60%;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin: 15px;
+    border: none;
+    border-bottom: 1px solid #251e1e;
+    background-color: transparent;
+    outline: none;
+}
+.login input[type="name"]::placeholder,
+.login input[type="email"]::placeholder,
+.login input[type="password"]::placeholder,
+.login label,
+.login a {
+    color: #4b1e08;
+    font-size: 15px;
+}
+.login input[type="name"]:focus,
+.login input[type="email"]:focus,
+.login input[type="password"]:focus {
+    border-bottom: 1px solid #3eef5b;
+}
+
+.login .password-line {
+    margin: 5px;
+    display: flex;
+    width: 60%;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.login a {
+    color: black;
+    margin-top: 3px;
+    text-decoration: none;
+}
+
+.login button {
+    margin: 5px;
+    width: 60%;
+    padding: 6px;
+    border-radius: 18px;
+    border: 1px solid black;
+}
+
+.login .register-line {
+    margin: 5px;
+    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    padding: 10px;
+}
+
+.login .register-line p,
+.login .register-line a {
+
+    color: #4b1e08;
+    margin: 10px 0px 5px 10px;
+}
+
+.login .register-line a {
+
+    margin-left: 5px;
+    color: #8c54e0;
+}
+
+@media screen and (max-width: 768px) {
+    .login form {
+        width: 80%;
+    }
+    .login input[type="name"],
+    .login input[type="email"],
+    .login input[type="password"],
+    .login button,
+    .login .register-line {
+        width: 100%;
+    }
+
+    .login .password-line {
+        width: 100%;
+    }
+}
+
+/* Botão de modo escuro */
+.toggle {
+    margin-top: 10px;
+    font-size: 2rem;
+    border: .125em solid currentColor;
+    border-radius: 2em;
+    cursor: pointer;
+    display: block;
+    height: 2em;
+    position: relative;
+    width: 4em;
+}
+
+.toggle span {
+    background-color: currentColor;
+    border-radius: 2em;
+    display: block;
+    height: 1.5em;
+    left: .25em;
+    overflow: hidden;
+    position: absolute;
+    top: .25em;
+    text-indent: -9999px;
+    transition: left .25s;
+    width: 1.5em;
+    z-index: 2;
+}
+
+.toggle::before,
+.toggle::after {
+    content: '';
+    display: block;
+    border-radius: 1em;
+    position: absolute;
+    z-index: 1;
+}
+
+.toggle::before {
+    box-shadow: .25em .25em #5901d8;
+    height: 1.125em;
+    right: .9em;
+    top: .125em;
+    width: 1.125em;
+}
+
+.toggle::after {
+    background-color: #ffc409;
+    height: .625em;
+    outline: .25em dotted #ffc409;
+    outline-offset: .125em;
+    left: .7em;
+    top: .7em;
+    width: .625em;
+}
+
+input:checked ~ .toggle span {
+    left: 2em;
+}
+
+.sr-only {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+}
+
+/* Estilo do botão de modo escuro para o tema escuro */
+.dark-mode #darkmode-toggle:checked + .toggle {
+    background-color: #534c4c;
+}
+
+/* Estilo do label do botão de modo escuro para o tema escuro */
+.dark-mode .login #darkmode-toggle label {
+    color: white;
+}
+
+.dark-mode {
+    color: #ffffff; /* Cor do texto para o tema escuro */
+}
+
+.dark-mode .login input[type="name"]::placeholder,
+.dark-mode .login input[type="email"]::placeholder,
+.dark-mode .login input[type="password"]::placeholder,
+.dark-mode .login label,
+.dark-mode .login a,
+.dark-mode .login .register-line p,
+.dark-mode .login .register-line a {
+    color: #f1f1f1; /* Cor do texto para o tema escuro */
+
+}
+
+.dark-mode .login form h2 {
+    color: #b9b9b9; /* Cor do título para o tema escuro */
+}
+
+.login input[type="name"],
+.dark-mode .login input[type="email"],
+.login input[type="password"] {
+
+    border-bottom: 1px solid #686161;
+
+}
+
+
+.dark-mode .login{
+
+    box-shadow: 0 0 10px rgba(208, 206, 206, 0.9);
+
+}
+
+.dark-mode .login .password-line a,
+.dark-mode .login .register-line a {
+    color: #117bcd;
+}
+
+.dark-mode .login input[type="name"],
+.dark-mode .login input[type="email"],
+.dark-mode .login input[type="password"] {
+
+    background-color: none !important;
+    color: white;
+}
+
