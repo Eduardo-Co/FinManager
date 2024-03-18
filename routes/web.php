@@ -4,6 +4,7 @@ use App\Http\Controllers\RendaController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardTableController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,11 @@ Route::resource('/register',RegisterController::class);
 Route::get('/login', [AuthController::class, 'visualizar'])->name('login');
 Route::post('/login', [AuthController::class, 'autenticar'])->name('login.auth');
 
-Route::get('/dashboard', function () {
-    return view('income.dashboard');
-})->middleware('auth')->name('dashboard');
+
+
+Route::prefix('fin')->middleware('auth')->group(function () {
+
+    Route::resource('dashboard', DashboardTableController::class);
+
+});
+

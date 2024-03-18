@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use App\Models\User;
 use Hash;
 
@@ -32,7 +33,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
 
             $user = Auth::user();
-            return redirect()->route('dashboard');
+            return Redirect::route('dashboard.index');
         } else {
 
             return back()->withErrors(['email' => 'Credenciais inválidas.']);
