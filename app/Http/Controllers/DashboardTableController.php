@@ -26,7 +26,8 @@ class DashboardTableController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('income.dashboard_add');
     }
 
     /**
@@ -34,13 +35,36 @@ class DashboardTableController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $dados = $request->all();
+
+        if ($request->input('add_more_parameter') == "true") {
+
+            $dados = $request->except('_token');
+            session()->push('temp', $dados);
+            session()->put('temp_stored_time', time());
+
+            return redirect()->route('dashboard.create');
+        }
+
+
+        $request->validate([
+            'bank' => 'required',
+            'description' => 'required',
+            'data' => 'required|date',
+            'status' => 'required',
+            'amount' => 'required|numeric',
+        ]);
+
+
+
+        return redirect()->route('dashboard.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
         //
     }

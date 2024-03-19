@@ -1,11 +1,10 @@
-@extends('income.layouts.basico')
+@extends('layouts.basico')
 
 @section('titulo', 'Login')
 
 @section('conteudo')
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 
 <table id="table-dashboard" class="table table-striped table-bordered" cellspacing="0" width="100%">
     <thead>
@@ -20,7 +19,7 @@
                         @foreach ($dados as $dado)
                         <li><a class="dropdown-item" href="#">{{$dado->tipo_banco}}</a></li>
                         @endforeach
-                        
+
                     </ul>
                   </div>
             </th>
@@ -32,8 +31,11 @@
             <th class="light-mode">Data</th>
             <th class="light-mode">Status</th>
             <th class="light-mode">Amount</th>
-            <th class="light-mode" style="text-align:center;width:100px;">Actions</th>
-        </tr>
+            <th class="light-mode" style="text-align:center;width:100px;">Actions
+                <button id="btnAdicionar" class="btn btn-primary" onclick="window.location.href='{{route('dashboard.create')}}'"><i class="fas fa-plus"></i> Add</button>
+            </th>
+            </th>
+         </tr>
     </thead>
     <tbody>
         @foreach ($dados as $dado)
@@ -52,5 +54,7 @@
         @endforeach
     </tbody>
 </table>
+
+
 
 @endsection

@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardTableController;
+Use App\Http\Controllers\ContaBancariaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,7 @@ Route::post('/login', [AuthController::class, 'autenticar'])->name('login.auth')
 
 Route::prefix('fin')->middleware('auth')->group(function () {
 
-    Route::resource('dashboard', DashboardTableController::class);
-
+    Route::resource('dashboard', DashboardTableController::class)->middleware('temp_verify');
+    Route::resource('userbank', ContaBancariaController::class);
 });
 

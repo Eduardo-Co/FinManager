@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
+        <script src="{{asset("js/scripts.js")}}"></script>
     </head>
 
     <body>
@@ -19,8 +19,10 @@
             <div  class="border-end light-mode" id="sidebar-wrapper">
                 <div  class="sidebar-heading border-bottom light-mode ">Start Bootstrap</div>
                 <div  class="list-group list-group-flush light-mode">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#!">Dashboard</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#!">Shortcuts</a>
+                    <a href="{{route('userbank.index')}}" class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#!">
+                        <img class="icon" src="{{asset("img/banco.png")}}"> Adicionar Conta
+                    </a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#">xxxxx</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#!">Overview</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#!">Events</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#!">Profile</a>

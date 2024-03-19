@@ -11034,3 +11034,112 @@ input:checked ~ .toggle{
     background-color: rgba(123, 31, 162, 0.3) !important;
 
 }
+
+/* Add Page Content */
+
+.transaction-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: auto;
+    margin-top: 2%;
+
+}
+.form-group {
+    margin-bottom: 20px;
+}
+label {
+    font-weight: bold;
+}
+#transactions-list {
+    margin-top: 30px;
+}
+
+.temp-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.temp-table th,
+.temp-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.temp-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.temp-item {
+    background-color: #ffffff;
+}
+
+.total-amount {
+    margin-top: 10px;
+}
+
+.positive {
+    color: green;
+}
+
+.negative {
+    color: red;
+}
+.total-amount {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.total-amount strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.total-amount strong::before {
+    content: "Total Amount: ";
+    font-weight: normal;
+}
+
+.positive {
+    color: green;
+}
+
+.negative {
+    color: red;
+}
+
+
+.total-amount{
+
+    margin: 10px;
+
+}
+
+
+.transaction-form h3{
+
+    margin-bottom: 25px;
+    margin-top: 25px;
+}
+
+
+.temp-section{
+
+    border-bottom: 2px dashed black;
+
+}
+
+
+
+/* DASHBOARD E ICONES */
+
+
+.icon{
+
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
