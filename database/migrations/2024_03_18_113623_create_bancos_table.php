@@ -17,12 +17,17 @@ return new class extends Migration
             $table->decimal('saldo_atual', 10, 2);
             $table->unsignedBigInteger('conta')->unique();
             $table->string('tipo_banco');
-            $table->decimal('investimentos', 10, 2);
-            $table->string('tipo_inv');
+            $table->timestamps();
+            $table->string('user_cpf');
+            $table->foreign('user_cpf')->references('cpf')->on('users')->onDelete('cascade');
         });
     }
     public function down(): void
     {
+        Schema::table('bancos', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
+
         Schema::dropIfExists('bancos');
     }
 };

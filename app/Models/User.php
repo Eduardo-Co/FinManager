@@ -50,9 +50,5 @@ class User extends Authenticatable
     ];
 
 
-    public function bancos()
-    {
-        return $this->belongsToMany('App\Models\Banco', 'transacao', 'cpf', 'conta')
-        ->withPivot(['tran_id', 'frequencia', 'data', 'saldo_tran']);
-    }
+    
 }

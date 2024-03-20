@@ -12,14 +12,14 @@
             <th class="light-mode" colspan="7">
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Dropdown button
+                      Bancos
                     </button>
                     <ul class="dropdown-menu">
-
-                        @foreach ($dados as $dado)
-                        <li><a class="dropdown-item" href="#">{{$dado->tipo_banco}}</a></li>
-                        @endforeach
-
+                        @if(isset($bancos))
+                            @foreach ($bancos as $dado)
+                            <li><a class="dropdown-item" href="#">{{$dado->tipo_banco}}</a></li>
+                            @endforeach
+                        @endif
                     </ul>
                   </div>
             </th>
@@ -38,20 +38,22 @@
          </tr>
     </thead>
     <tbody>
-        @foreach ($dados as $dado)
-            <tr>
-                <td>{{$dado->pivot->tran_id}}</td>
-                <td>{{$dado->tipo_banco}}</td>
-                <td>Sem Descrição</td>
-                <td>{{$dado->pivot->data}}</td>
-                <td>Sem status</td>
-                <td>{{$dado->pivot->saldo_tran}} R$</td>
-                <td>
-                    <button class="edit-btn"><i class="fas fa-edit" alt="Edit icon"></i></button>
-                    <button class="delete-btn"><i class="fas fa-trash-alt" alt="Delete icon"></i></button>
-                </td>
-            </tr>
-        @endforeach
+
+            @foreach ($transacoes as  $dado)
+                <tr>
+                    <td>{{$dado->tran_id}}</td>
+                    <td>{{$dado->banco->tipo_banco}}</td>
+                    <td>{{$dado->desc}}</td>
+                    <td>{{$dado->data}}</td>
+                    <td>{{$dado->desc}}</td>
+                    <td>{{$dado->saldo_tran}} R$</td>
+                    <td>
+                        <button class="edit-btn"><i class="fas fa-edit" alt="Edit icon"></i></button>
+                        <button class="delete-btn"><i class="fas fa-trash-alt" alt="Delete icon"></i></button>
+                    </td>
+                </tr>
+            @endforeach
+
     </tbody>
 </table>
 

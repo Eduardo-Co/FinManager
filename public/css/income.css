@@ -11070,11 +11070,12 @@ label {
 
 .temp-table th {
     background-color: #f2f2f2;
-    text-align: left;
+    text-align: center;
 }
 
 .temp-item {
     background-color: #ffffff;
+    text-align: center;
 }
 
 .total-amount {

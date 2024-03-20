@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Banco;
+use Illuminate\Support\Facades\Auth;
 
 class ContaBancariaController extends Controller
 {
@@ -19,7 +21,7 @@ class ContaBancariaController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -27,12 +29,38 @@ class ContaBancariaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+        'agencia' => 'required|digits:4',
+        'conta' => 'required',
+        'saldo_atual' => 'required|numeric',
+        'tipo_banco' => 'required',
+        ];
+
+
+        $messages = [
+        'agencia.required' => 'O número da agência é obrigatório.',
+        'agencia.digits' => 'O número da agência deve ter 4 dígitos.',
+        'conta.required' => 'O número da conta é obrigatório.',
+        'saldo_atual.required' => 'O saldo atual é obrigatório.',
+        'saldo_atual.numeric' => 'O saldo atual deve ser um número.',
+        'tipo_banco.required' => 'O nome do banco é obrigatório.',
+        ];
+
+        $user = Auth::User();
+        $user_cpf = $user->cpf;
+
+        Banco::create([
+            'agencia' => $request->agencia,
+            'conta' => $request->conta,
+            'saldo_atual' => $request->saldo_atual,
+            'tipo_banco' => $request->tipo_banco,
+            'user_cpf' => $user_cpf
+        ]);
+
+        return redirect()->route('dashboard.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
         //

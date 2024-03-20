@@ -19,10 +19,11 @@
             <div  class="border-end light-mode" id="sidebar-wrapper">
                 <div  class="sidebar-heading border-bottom light-mode ">Start Bootstrap</div>
                 <div  class="list-group list-group-flush light-mode">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="
+                    {{route('dashboard.index')}}">Dashboard</a>
                     <a href="{{route('userbank.index')}}" class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#!">
                         <img class="icon" src="{{asset("img/banco.png")}}"> Adicionar Conta
                     </a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#">xxxxx</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#!">Overview</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#!">Events</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#!">Profile</a>

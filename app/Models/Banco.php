@@ -9,20 +9,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Banco extends Model
 {
     protected $primaryKey = 'conta';
-    
+
     use HasFactory;
     protected $fillable = [
         'agencia',
         'saldo_atual',
         'conta',
         'tipo_banco',
-        'tipo_inv',
+        'user_cpf'
     ];
 
-
-    public function usuarios()
+    public function transacoes()
     {
-        return $this->belongsToMany('App\Models\User', 'transacao', 'conta', 'cpf')
-                ->withPivot(['tran_id', 'frequencia', 'data', 'saldo_tran']);
+        return $this->hasMany(Transacao::class, 'conta_id', 'conta');
     }
+
 }

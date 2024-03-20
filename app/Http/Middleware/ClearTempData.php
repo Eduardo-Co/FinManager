@@ -17,7 +17,7 @@ class ClearTempData
     public function handle(Request $request, Closure $next): Response
     {
 
-        $tempDataExpiration = 1.5; // Tempo em minutos (por exemplo, 60 minutos = 1 hora)
+        $tempDataExpiration = 1; // Tempo em minutos (por exemplo, 60 minutos = 1 hora)
 
         if (Session::has('temp')) {
 

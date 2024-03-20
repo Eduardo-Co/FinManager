@@ -9,17 +9,19 @@
 <div class="transaction-form">
     @if(session('temp'))
     <div class="temp-section">
-        <h3>Transações Adicionas:</h3>
+        <h3>Transações Adicionadas:</h3>
         <table class="temp-table">
             <thead>
                 <tr>
                     <th>Description</th>
                     <th>Amount</th>
+                    <th>Data</th>
+                    <th>Parcelas</th>
                 </tr>
             </thead>
             <tbody>
                 @php
-                    $totalAmount = 0; // Variável para calcular a soma dos amounts
+                    $totalAmount = 0;
                 @endphp
                 @foreach(session('temp') as $temp)
                     <tr class="temp-item">
@@ -29,9 +31,15 @@
                         @if($temp['amount'])
                             <td>{{$temp['amount']}} R$</td>
                             @php
-                                $totalAmount += $temp['amount']; // Adiciona o amount atual ao total
+                                $totalAmount += $temp['amount'];
                             @endphp
                         @endif
+                        @if($temp['data'])
+                            <td>{{$temp['data']}}</td>
+                        @endif
+                        @if($temp['parcelas'])
+                        <td>{{$temp['parcelas']}}</td>
+                    @endif
                     </tr>
                 @endforeach
             </tbody>
@@ -51,7 +59,11 @@
         <div id="transaction-list"></div>
         <div class="form-group">
             <label for="bank">Bank:</label>
-            <input type="text" class="form-control" id="bank" name="bank" value="{{ $bank ?? '' }}" required>
+            <select class="form-control" id="bank" name="bank" required>
+                @foreach ($bancos as $banco)
+                    <option value="{{ $banco->tipo_banco }}">{{ $banco->tipo_banco }}</option>
+                @endforeach
+            </select>
         </div>
         <div class="form-group">
             <label for="description">Description:</label>
@@ -62,13 +74,16 @@
             <input type="date" class="form-control" id="data" name="data" value="{{ $data ?? '' }}" required>
         </div>
         <div class="form-group">
-            <label for="status">Status:</label>
-            <input type="text" class="form-control" id="status" name="status" value="{{ $status ?? '' }}" required>
+            <label for="status">Parcelas:</label>
+            <select class="form-control" id="parcelas" name="parcelas" required>
+                @foreach ($parcelas as $parcela)
+                    <option value="{{ $parcela->parcelas }}">{{ $parcela->parcelas}}x</option>
+                @endforeach
+            </select>
         </div>
         <div class="form-group">
             <label for="amount">Amount:</label>
             <input type="number" class="form-control" id="amount" name="amount" value="{{ $amount ?? '' }}" required>
-            <!-- Campo oculto para indicar que o usuário clicou em "Adicionar mais um parâmetro" -->
             <input type="hidden" id="add-more-parameter" name="add_more_parameter" value="false">
             <a href="#" id="add-parameter-link">Adicionar mais uma transação</a>
         </div>

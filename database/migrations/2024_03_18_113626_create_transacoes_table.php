@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transacao', function (Blueprint $table) {
-            $table->id('tran_id')->unique();;
-            $table->integer('frequencia');
+        Schema::create('transacoes', function (Blueprint $table) {
+            $table->id('tran_id')->unique();
+            $table->string('status');
+            $table->integer('parcelas');
             $table->date('data');
             $table->decimal('saldo_tran', 10, 2);
-            $table->string('cpf');
-            $table->unsignedBigInteger('conta');
+            $table->unsignedBigInteger('conta_id');
+            $table->string('desc');
+            $table->timestamps();
 
-
-            $table->foreign('cpf')->references('cpf')->on('users')->onDelete('cascade');
-            $table->foreign('conta')->references('conta')->on('bancos')->onDelete('cascade');
+            $table->foreign('conta_id')->references('conta')->on('bancos')->onDelete('cascade');
         });
     }
 
@@ -31,10 +31,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('transacao', function (Blueprint $table) {
-            $table->dropForeign(['cpf']);
-            $table->dropForeign(['conta']);
+            $table->dropForeign(['conta_id']);
         });
 
-        Schema::dropIfExists('transacao');
+        Schema::dropIfExists('transacoes');
     }
 };
