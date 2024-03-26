@@ -49,6 +49,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function banco(){
 
-    
+        return $this->hasMany(Banco::class, 'user_cpf', 'cpf');
+    }
+
 }

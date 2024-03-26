@@ -70,7 +70,7 @@ class RegisterController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        session_destroy();
     }
 
 }

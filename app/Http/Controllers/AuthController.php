@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\User;
 use Hash;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -39,5 +40,9 @@ class AuthController extends Controller
             return back()->withErrors(['email' => 'Credenciais inválidas.']);
         }
     }
+    public function sair(Request $request){
 
+        Session::flush();
+        return redirect()->route('login.auth');
+    }
 }

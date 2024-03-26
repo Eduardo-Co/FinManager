@@ -23,5 +23,8 @@ class Banco extends Model
     {
         return $this->hasMany(Transacao::class, 'conta_id', 'conta');
     }
+    public function usuarios(){
 
+        return $this->belongsTo(User::class, 'user_cpf', 'cpf');
+    }
 }

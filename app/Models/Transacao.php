@@ -9,6 +9,7 @@ use App\Models\Banco;
 class Transacao extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'tran_id';
     protected $table = 'transacoes';
     protected $fillable = [
         'frequencia',

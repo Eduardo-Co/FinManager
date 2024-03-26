@@ -34,7 +34,7 @@
             <input type="text" class="form-control" id="tipo_banco" name="tipo_banco"  required>
             {{$errors->has('nome_banco') ? $errors->first('tipo_banco') : ''}}
         </div>
-        <button type="submit" class="btn btn-primary">Adicionar Conta</button>
+        <button type="submit" class="btn btn-primary">Add Bank</button>
     </form>
 
 

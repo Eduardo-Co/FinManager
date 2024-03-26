@@ -13,13 +13,11 @@ use Illuminate\Support\Facades\Session;
 
 class DashboardTableController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
 
         $user = Auth::User();
+
 
         $bancos = Banco::where('user_cpf', $user->cpf)->get();
 
@@ -49,10 +47,6 @@ class DashboardTableController extends Controller
         $bancos = Banco::where('user_cpf', $user->cpf)->get();
         $saldo_novo = 0;
 
-        foreach($bancos as $banco){
-        }
-
-
         $dados = $request->all();
 
         if ($request->input('add_more_parameter') == "true") {
@@ -67,6 +61,8 @@ class DashboardTableController extends Controller
 
             session()->push('temp', $dados);
             session()->put('temp_stored_time', time());
+
+
 
             foreach (session('temp') as $dados) {
                 if ($dados['parcelas'] > 1) {
@@ -88,7 +84,7 @@ class DashboardTableController extends Controller
                 }
 
                 Transacao::create([
-                    'conta_id' => $banco->conta,
+                    'conta_id' => $dados['bank'],
                     'status' => $status,
                     'data' => $dados['data'],
                     'parcelas' => $dados['parcelas'],
@@ -97,14 +93,13 @@ class DashboardTableController extends Controller
                 ]);
                 $saldo_novo += $dados['amount'];
             }
-
             foreach ($bancos as $banco) {
-                $saldo_anterior = $banco->saldo_atual;
-                $saldo_posterior = $saldo_novo + $saldo_anterior;
-
-                $banco->saldo_atual = $saldo_posterior;
-                
-                $banco->save();
+                if($banco->conta == $dados['bank']){
+                    $saldo_anterior = $banco->saldo_atual;
+                    $saldo_posterior = $saldo_novo + $saldo_anterior;
+                    $banco->saldo_atual = $saldo_posterior;
+                    $banco->save();
+                }
             }
 
             Session::forget('temp');
@@ -126,22 +121,81 @@ class DashboardTableController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $transacao = Transacao::findOrFail($id);
+        $parcelas = ParcelaImplemento::get();
+
+        return view('income.editdashboard', ['transacao' => $transacao, 'parcelas' => $parcelas]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
+
+
+
     public function update(Request $request, string $id)
     {
-        //
+
+        $transacao = Transacao::findOrFail($id);
+        $user = Auth::user();
+        $bancos = Banco::where('user_cpf', $user->cpf)->get();
+        $saldo_novo = 0;
+
+
+        if ($user->id != $transacao->user_id) {
+            return redirect()->back()->with('error', 'Você não tem permissão para editar esta transação.');
+        }
+
+        if ($request->has('parcelas') && $request->parcelas > 1) {
+            $status = $request->parcelas;
+        } else {
+
+            switch (true) {
+                case $request->amount > 0:
+                    $status = 'profit';
+                    break;
+                case $request->amount < 0:
+                    $status = 'debit';
+                    break;
+                default:
+                    $status = 'neutro';
+                    break;
+            }
+        }
+        $saldo_novo = $request->amount - $transacao->saldo_tran; 
+        $transacao->status = $status;
+        $transacao->desc = $request->description;
+        $transacao->data = $request->data;
+        $transacao->parcelas = $request->parcelas;
+        $transacao->saldo_tran = $request->amount;
+        $transacao->conta_id = $request->bank;
+
+        $transacao->save();
+
+        foreach ($bancos as $banco) {
+            if($banco->conta == $request->bank){
+                $saldo_anterior = $banco->saldo_atual;
+                $saldo_posterior = $saldo_novo + $saldo_anterior;
+                $banco->saldo_atual = $saldo_posterior;
+                $banco->save();
+            }
+        }
+
+        return redirect()->route('dashboard.index')->with('success', 'Transação atualizada com sucesso.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
+
     public function destroy(string $id)
     {
-        //
+        $verify = Transacao::where('tran_id', $id)->first();
+        $account = Banco::where('conta', $verify->conta_id)->first();
+        $user = Auth::user();
+
+        if ($user->cpf == $account->user_cpf) {
+
+            $verify->delete();
+
+            return redirect()->route('dashboard.index');
+        }
     }
+
 }

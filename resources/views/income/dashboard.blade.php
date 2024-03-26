@@ -39,17 +39,27 @@
     </thead>
     <tbody>
 
-            @foreach ($transacoes as  $dado)
+        @foreach ($transacoes as  $dado)
                 <tr>
                     <td>{{$dado->tran_id}}</td>
                     <td>{{$dado->banco->tipo_banco}}</td>
                     <td>{{$dado->desc}}</td>
                     <td>{{$dado->data}}</td>
-                    <td>{{$dado->desc}}</td>
+                    <td class="@if($dado->status == 'profit') profit @elseif($dado->status == 'debit') debit @else orange @endif">
+                        <span>{{$dado->status}}@if($dado->status != 'profit' && $dado->status != 'debit')x @endif </span></td>
                     <td>{{$dado->saldo_tran}} R$</td>
                     <td>
-                        <button class="edit-btn"><i class="fas fa-edit" alt="Edit icon"></i></button>
-                        <button class="delete-btn"><i class="fas fa-trash-alt" alt="Delete icon"></i></button>
+                        <a href='{{route("dashboard.edit",$dado->tran_id)}}' class="edit-btn"><i class="fas fa-edit" alt="Edit icon"></i></a>
+                        <a href='{{ route("dashboard.destroy", $dado->tran_id) }}' class="delete-btn"
+                            onclick="event.preventDefault(); document.getElementById('delete-form-{{ $dado->tran_id }}').submit();">
+                             <i class="fas fa-trash-alt" alt="Delete icon"></i>
+                         </a>
+
+                         <form id="delete-form-{{ $dado->tran_id }}" action="{{ route('dashboard.destroy', $dado->tran_id) }}" method="POST" style="display: none;">
+                             @csrf
+                             @method('DELETE')
+                         </form>
+
                     </td>
                 </tr>
             @endforeach

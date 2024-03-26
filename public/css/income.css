@@ -11144,3 +11144,37 @@ label {
     height: 25px;
     margin-right: 10px;
 }
+
+
+.profit {
+    text-align: center;
+}
+
+.debit {
+
+    text-align: center;
+}
+
+.orange {
+
+    text-align: center;
+}
+
+.profit span {
+    padding: 5px 14px;
+    background-color: rgba(0, 100, 0, 0.7) !important; /* Verde mais escuro com 70% de transparência */
+    border-radius: 20px;
+}
+
+.debit span {
+    padding: 5px 14px;
+    background-color: rgba(255, 0, 0, 0.5) !important; /* Vermelho com 50% de transparência */
+    border-radius: 20px;
+}
+
+.orange span {
+    padding: 6px 26px;
+    background-color: rgba(255, 165, 0, 0.5) !important; /* Laranja com 50% de transparência */
+    border-radius: 20px;
+}
+

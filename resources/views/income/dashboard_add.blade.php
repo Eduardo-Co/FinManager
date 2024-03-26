@@ -13,6 +13,7 @@
         <table class="temp-table">
             <thead>
                 <tr>
+                    <th>Banco</th>
                     <th>Description</th>
                     <th>Amount</th>
                     <th>Data</th>
@@ -24,7 +25,10 @@
                     $totalAmount = 0;
                 @endphp
                 @foreach(session('temp') as $temp)
-                    <tr class="temp-item">
+                <tr class="temp-item">
+                        @if($temp['bank'])
+                         <td>{{$temp['bank']}}</td>
+                        @endif
                         @if($temp['description'])
                             <td>{{$temp['description']}}</td>
                         @endif
@@ -38,8 +42,8 @@
                             <td>{{$temp['data']}}</td>
                         @endif
                         @if($temp['parcelas'])
-                        <td>{{$temp['parcelas']}}</td>
-                    @endif
+                         <td>{{$temp['parcelas']}}</td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>
@@ -61,7 +65,7 @@
             <label for="bank">Bank:</label>
             <select class="form-control" id="bank" name="bank" required>
                 @foreach ($bancos as $banco)
-                    <option value="{{ $banco->tipo_banco }}">{{ $banco->tipo_banco }}</option>
+                    <option value="{{ $banco->conta }}">{{ $banco->tipo_banco }}</option>
                 @endforeach
             </select>
         </div>
