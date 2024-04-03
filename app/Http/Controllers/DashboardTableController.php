@@ -16,8 +16,8 @@ class DashboardTableController extends Controller
     public function index()
     {
 
-        $user = Auth::User();
 
+        $user = Auth::User();
 
         $bancos = Banco::where('user_cpf', $user->cpf)->get();
 
@@ -160,7 +160,7 @@ class DashboardTableController extends Controller
                     break;
             }
         }
-        $saldo_novo = $request->amount - $transacao->saldo_tran; 
+        $saldo_novo = $request->amount - $transacao->saldo_tran;
         $transacao->status = $status;
         $transacao->desc = $request->description;
         $transacao->data = $request->data;

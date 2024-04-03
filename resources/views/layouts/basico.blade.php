@@ -27,7 +27,7 @@
                     <a href="{{route('userbank.index')}}" class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#!">
                         <img class="icon" src="{{asset("img/banco.png")}}"> Adicionar Conta
                     </a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="{{route('analisar')}}"><img class="icon" src="{{asset("img/analise.png")}}">Analisar</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#"><img class="icon" src="{{asset("img/analise.png")}}">Analisar</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#!">Events</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#!">Profile</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 light-mode" href="#!">Status</a>

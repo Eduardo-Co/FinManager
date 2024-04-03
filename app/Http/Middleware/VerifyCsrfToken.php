@@ -12,6 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        'teste2', // Endpoint que não requer verificação CSRF
     ];
 }

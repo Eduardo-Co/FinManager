@@ -29,8 +29,8 @@ class SessionTimeout
 
         $lastActivity = Session::get('last_activity');
 
+
         if ($lastActivity && time() - $lastActivity > config('session.lifetime')) {
-            // Destroy the session
             Session::flush();
             Session::regenerate();
             return redirect()->route('login')->with('error', 'Your session has expired. Please log in again.');
