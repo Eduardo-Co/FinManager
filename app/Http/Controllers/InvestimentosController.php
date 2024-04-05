@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Investimento;
 use Illuminate\Http\Request;
 use App\Models\Banco;
-use App\Models\User;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Facades\Http;
 
 class InvestimentosController extends Controller
 {
@@ -18,8 +20,6 @@ class InvestimentosController extends Controller
 
         $bancos = Banco::where('user_cpf', $user->cpf)->get();
 
-
-
         return view('menu.investimento', ['bancos'=>$bancos]);
     }
 
@@ -28,7 +28,7 @@ class InvestimentosController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -36,7 +36,22 @@ class InvestimentosController extends Controller
      */
     public function store(Request $request)
     {
-        
+
+        $saldo = Banco::findOrFail($request->banco)->saldo_atual;
+        $data = $request->except('_token');
+        $data['saldo_atual'] = $saldo;
+
+        $data = json_encode($data);
+
+        $response = Http::withOptions([
+            'proxy' => [
+                'http'  => '',
+                'https' => '',
+            ]
+        ])->post('http://127.0.0.1:5000/laravel-requisicao', $data);
+
+
+        return $response;
     }
 
     /**

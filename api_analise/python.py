@@ -1,41 +1,66 @@
-import requests
+from flask import Flask, request, jsonify
 import os
-
-url_token = 'http://127.0.0.1:8000/api/sanctum/token'
-url_teste = 'http://127.0.0.1:8000/api/teste'
-
-# Substitua isso pelas credenciais do usuário
-data = {
-    'email': 'edubrcardozo23@gmail.com',
-    'password': 'salinas132',
-    'device_name': 'PythonRequisiton',
-}
-
-response_token = requests.post(url_token, data=data)
-
-if response_token.status_code == 200:
-
-    print("Token de autenticação obtido com sucesso.")
-    token = response_token.text
-    print(token)
+import json
+import numpy as np
 
 
-    headers = {
-        'Authorization': 'Bearer ' + token
-    }
+#Somente para Teste do FLASK, poderia ser tudo feito no laravel
 
-    response_teste = requests.post(url_teste, headers=headers)
 
-    if response_teste.status_code == 200:
-        print("Redirecionamento para rota /teste bem-sucedido.")
+app = Flask(__name__)
+os.environ['http_proxy'] = ''
+os.environ['https_proxy'] = ''
 
-        print(response_teste.text)
+@app.route('/laravel-requisicao', methods=['POST'])
+def grafico():
+    data = request.json
+    if data:
+        print('\n\nDados recebidos')
+        print(data)
+        print('\n')
+        resultados = tratar_dados(data)
+
+
+        resultados_json = {
+            "valor_total": resultados[0],
+            "valor_investido": resultados[1],
+            "juros": resultados[2]
+        }
+
+
+
+        return jsonify(resultados_json)
     else:
-        print("Erro ao redirecionar para rota /teste. Status:", response_teste.status_code)
-else:
-    conteudo = f"{response_token.text}\nErro ao solicitar token de autenticação. Status: {response_token.status_code}"
-    caminho_arquivo = os.path.join(os.path.expanduser('~'), 'Desktop', 'saida.txt')
-    with open(caminho_arquivo, 'w', encoding='utf-8') as arquivo:
-     arquivo.write(conteudo)
+        print('Nao Recebido ERRO: '+ request.content_encoding)
 
-    print("Erro ao solicitar token de autenticação. Status:", response_token.status_code)
+def tratar_dados(data):
+    data = json.loads(data)
+
+    saldo_atual =  float(data['saldo_atual'])
+    duracao = float(data['duracao'])
+    juros = float(data['retorno_mensal'])/100
+    aporte_mensal = float(data['investimento_mensal'])
+
+    print("saldo_atual:", saldo_atual)
+    print("duracao:", duracao)
+    print("juros:", juros)
+    print("aporte_mensal:", aporte_mensal)
+
+    print('\n\n')
+
+    final_total, final_investido, final_juros = calcular_valor(saldo_atual, aporte_mensal, juros, duracao)
+    print("Valor Total:", final_total)
+    print("Valor Investido:", final_investido)
+    print("Juros:", final_juros)
+
+    return final_total, final_investido, final_juros
+
+def calcular_valor(saldo_atual, aporte_mensal, juros, duracao):
+    valor_total = saldo_atual * (1 + juros) ** duracao + aporte_mensal * (((1 + juros) ** duracao - 1) / juros)
+    valor_investido = saldo_atual + aporte_mensal * duracao
+    valor_juros = valor_total - valor_investido
+
+    return "{:.2f}".format(valor_total), "{:.2f}".format(valor_investido), "{:.2f}".format(valor_juros)
+
+if __name__ == '__main__':
+    app.run(debug=True)

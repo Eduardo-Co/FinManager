@@ -10,6 +10,9 @@ use App\Http\Controllers\TesteController;
 
 Route::get('/teste', [TesteController::class, 'teste']);
 
+
+
+
 Route::redirect('/', '/login');
 Route::resource('/register',RegisterController::class);
 Route::get('/login', [AuthController::class, 'visualizar'])->name('login');

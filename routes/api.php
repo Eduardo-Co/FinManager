@@ -3,12 +3,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\TesteApiController;
+use App\Http\Controllers\API\EnviarDadosController;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
-Route::post('/teste', [TesteApiController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/teste', [EnviarDadosController::class, 'index'])->middleware('auth:sanctum');
 
 
 Route::post('/sanctum/token', function (Request $request) {

@@ -23,6 +23,7 @@
                 @foreach ($bancos as $banco)
                     <option value="{{ $banco->conta }}">{{ $banco->conta }} - {{ $banco->tipo_banco }}</option>
                 @endforeach
+
             </select>
             {{$errors->has('banco') ? $errors->first('banco') : ''}}
         </div>
@@ -33,7 +34,7 @@
         </div>
         <div class="form-group">
             <label for="retorno_mensal">Taxa de Retorno Mensal (%):</label>
-            <input type="text" class="form-control" id="retorno_mensal" name="retorno_mensal" required>
+            <input type="number" class="form-control" id="retorno_mensal" name="retorno_mensal" required>
             {{$errors->has('retorno_mensal') ? $errors->first('retorno_mensal') : ''}}
         </div>
         <div class="form-group">
