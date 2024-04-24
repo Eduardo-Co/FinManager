@@ -1,11 +1,7 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, render_template
 import os
 import json
-import numpy as np
-
-
-#Somente para Teste do FLASK, poderia ser tudo feito no laravel
-
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 os.environ['http_proxy'] = ''
@@ -15,43 +11,34 @@ os.environ['https_proxy'] = ''
 def grafico():
     data = request.json
     if data:
-        print('\n\nDados recebidos')
-        print(data)
-        print('\n')
         resultados = tratar_dados(data)
 
+        # Gerar gráfico com base nos resultados
+        plt.figure(figsize=(8, 6))
+        valores = ['Valor Total', 'Valor Investido', 'Juros']
+        valores_resultados = list(resultados)
+        plt.bar(valores, valores_resultados)
+        plt.title('Resultados do Investimento')
+        plt.xlabel('Tipo')
+        plt.ylabel('Valor')
+        plt.grid(True)
 
-        resultados_json = {
-            "valor_total": resultados[0],
-            "valor_investido": resultados[1],
-            "juros": resultados[2]
-        }
+        # Salvar o gráfico
+        graph_path = os.path.join('static', 'graph.png')
+        plt.savefig(graph_path)
+        plt.close()
 
-
-
-        return jsonify(resultados_json)
+        return render_template('grafico.html')
     else:
-        print('Nao Recebido ERRO: '+ request.content_encoding)
+        return 'Erro: Nenhum dado recebido'
 
 def tratar_dados(data):
-    data = json.loads(data)
-
-    saldo_atual =  float(data['saldo_atual'])
+    saldo_atual = float(data['saldo_atual'])
     duracao = float(data['duracao'])
-    juros = float(data['retorno_mensal'])/100
+    juros = float(data['retorno_mensal']) / 100
     aporte_mensal = float(data['investimento_mensal'])
 
-    print("saldo_atual:", saldo_atual)
-    print("duracao:", duracao)
-    print("juros:", juros)
-    print("aporte_mensal:", aporte_mensal)
-
-    print('\n\n')
-
     final_total, final_investido, final_juros = calcular_valor(saldo_atual, aporte_mensal, juros, duracao)
-    print("Valor Total:", final_total)
-    print("Valor Investido:", final_investido)
-    print("Juros:", final_juros)
 
     return final_total, final_investido, final_juros
 
@@ -60,7 +47,7 @@ def calcular_valor(saldo_atual, aporte_mensal, juros, duracao):
     valor_investido = saldo_atual + aporte_mensal * duracao
     valor_juros = valor_total - valor_investido
 
-    return "{:.2f}".format(valor_total), "{:.2f}".format(valor_investido), "{:.2f}".format(valor_juros)
+    return valor_total, valor_investido, valor_juros
 
 if __name__ == '__main__':
     app.run(debug=True)

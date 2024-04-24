@@ -36,23 +36,22 @@ class InvestimentosController extends Controller
      */
     public function store(Request $request)
     {
-
+        // Obter o saldo do banco
         $saldo = Banco::findOrFail($request->banco)->saldo_atual;
+
+     
         $data = $request->except('_token');
         $data['saldo_atual'] = $saldo;
 
-        $data = json_encode($data);
-
         $response = Http::withOptions([
             'proxy' => [
-                'http'  => '',
-                'https' => '',
+                'http'  => '', // Proxy de HTTP vazio
+                'https' => '', // Proxy de HTTPS vazio
             ]
         ])->post('http://127.0.0.1:5000/laravel-requisicao', $data);
-
-
         return $response;
     }
+
 
     /**
      * Display the specified resource.
